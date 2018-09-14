@@ -2,9 +2,11 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def hello_world():
-    return 'This is the main page. <a href="http://localhost:5000/form1">Click here to see the form.</a>'
+    return '<h1>This is the main page.</h1> <a href="http://localhost:5000/form1">Click here to see Form 1.</a> <br><br> <a href="http://localhost:5000/form2">Click here to see the Form 2.</a>'
+
 
 @app.route('/form1')
 def form1():
@@ -15,15 +17,18 @@ def form1():
   <input type="submit" value="Submit">
 </form>"""
 
-@app.route('/result',methods=["GET"])
+
+@app.route('/result', methods=["GET"])
 def result_form1():
     if request.method == "GET":
-        print(request.args) # Check out your Terminal window where you're running this...
+        # Check out your Terminal window where you're running this...
+        print(request.args)
         result_str = ""
         for k in request.args:
-            result_str += "{} - {}<br><br>".format(k, request.args.get(k,""))
+            result_str += "{} - {}<br><br>".format(k, request.args.get(k, ""))
         return result_str
     return "Nothing was selected this time!"
+
 
 @app.route('/form2')
 def form2():
@@ -33,10 +38,11 @@ def form2():
     </form>
     """
 
-@app.route('/letter',methods=["GET"])
+
+@app.route('/letter', methods=["GET"])
 def letters_result():
     if request.method == "GET":
-        phrase = request.args.get('phrase','')
+        phrase = request.args.get('phrase', '')
         total_number = 0
         for ch in phrase:
             if ch == "e":
@@ -47,4 +53,4 @@ def letters_result():
 
 
 if __name__ == "__main__":
-    app.run(debug=True) # Nice trick -- see details in lecture notes
+    app.run(debug=True)  # Nice trick -- see details in lecture notes
